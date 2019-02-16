@@ -1,6 +1,9 @@
 .DS_Store
 node_modules
 /dist
+.private-env
+/work.private
+firebase-debug.log
 
 # local env files
 .env.local
@@ -19,3 +22,46 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+
+
+# Created by https://www.gitignore.io/api/vue,macos,firebase
+# Edit at https://www.gitignore.io/?templates=vue,macos,firebase
+
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# End of https://www.gitignore.io/api/vue,macos,firebase
