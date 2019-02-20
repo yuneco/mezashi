@@ -1,16 +1,18 @@
 <template>
   <e-cont class="cat-root"
-    disable-animation
-    :x="x" :y="y" :w="330" :h="315" :r="r" :s="s"
+    disable-animationX
+    :x="x - 165" :y="y - 310 + animProps.rootY" :w="330" :h="315" :r="r" :s="catRootSize"
+    :ox="165" :oy="310"
+    :dur="2000"
     @click="$emit('click')"
   >
 
     <!-- 前足奥 -->
-    <e-cont :x="59" :y="208" :w="77" :h="103" :ox="58" :oy="17">
+    <e-cont ref="amBk" :x="amBkPos.x" :y="amBkPos.y" :w="amBkPos.w" :h="amBkPos.h" :ox="amBkPos.ox" :oy="amBkPos.oy" :r="amBkPos.r">
       <am-hati></am-hati>
     </e-cont>
     <!-- 後ろ足奥 -->
-    <e-cont :x="182" :y="210" :w="75" :h="109" :ox="53" :oy="20">
+    <e-cont ref="lgBk" :x="lgBkPos.x" :y="lgBkPos.y" :w="lgBkPos.w" :h="lgBkPos.h" :ox="lgBkPos.ox" :oy="lgBkPos.oy" :r="lgBkPos.r">
       <lg-hati></lg-hati>
     </e-cont>
 
@@ -20,11 +22,11 @@
     </e-cont>
 
     <!-- 前足手前 -->
-    <e-cont :x="79" :y="208" :w="77" :h="103" :ox="58" :oy="17">
+    <e-cont ref="amFr" :x="amFrPos.x" :y="amFrPos.y" :w="amFrPos.w" :h="amFrPos.h" :ox="amFrPos.ox" :oy="amFrPos.oy" :r="amFrPos.r">
       <am-hati></am-hati>
     </e-cont>
     <!-- 後ろ足手前 -->
-    <e-cont :x="202" :y="210" :w="75" :h="109" :ox="53" :oy="20">
+    <e-cont ref="lgFr" :x="lgFrPos.x" :y="lgFrPos.y" :w="lgFrPos.w" :h="lgFrPos.h" :ox="lgFrPos.ox" :oy="lgFrPos.oy" :r="lgFrPos.r">
       <lg-hati></lg-hati>
     </e-cont>
 
@@ -48,6 +50,8 @@ import BdHati from '@/assets/CatBdHati.svg'
 import AmHati from '@/assets/CatAmHati.svg'
 import LgHati from '@/assets/CatLgHati.svg'
 import TaHati from '@/assets/CatTaHati.svg'
+import Tween from '@/core/Tween'
+// import Time from '@/core/Time'
 
 export default {
   name: 'Cat',
@@ -57,6 +61,85 @@ export default {
     y: { type: [Number, String], default: 0 },
     r: { type: [Number, String], default: 0 },
     s: { type: [Number, String], default: 1 }
+  },
+  data () {
+    return {
+      pose: null,
+      amFrPosDefault: {
+        x: 79, y: 208, w: 77, h: 103, ox: 58, oy: 17, r: 0
+      },
+      lgFrPosDefault: {
+        x: 202, y: 210, w: 75, h: 109, ox: 53, oy: 20, r: 0
+      },
+      amBkPosDefault: {
+        x: 59, y: 208, w: 77, h: 103, ox: 58, oy: 17, r: 0
+      },
+      lgBkPosDefault: {
+        x: 182, y: 210, w: 75, h: 109, ox: 53, oy: 20, r: 0
+      },
+
+      animProps: {
+        amFrR: 0,
+        amBkR: 0,
+        lgFrR: 0,
+        lgBkR: 0,
+        rootSY: 1,
+        rootY: 0
+      }
+    }
+  },
+  computed: {
+    amFrPos () {
+      const p = { ...this.amFrPosDefault }
+      p.r = this.animProps.amFrR
+      return p
+    },
+    amBkPos () {
+      const p = { ...this.amBkPosDefault }
+      p.r = this.animProps.amBkR
+      return p
+    },
+    lgFrPos () {
+      const p = { ...this.lgFrPosDefault }
+      p.r = this.animProps.lgFrR
+      return p
+    },
+    lgBkPos () {
+      const p = { ...this.lgBkPosDefault }
+      p.r = this.animProps.lgBkR
+      return p
+    },
+    catRootSize () {
+      return [this.s, this.s * this.animProps.rootSY]
+    }
+  },
+  methods: {
+    async startPoseAnim (pose) {
+      this.pose = pose
+      while (this.pose) {
+        const tw = new Tween(this.animProps)
+        if (this.pose === 'walk') {
+          await tw.to({ amFrR: 30, amBkR: -30, lgFrR: -30, lgBkR: 30, rootY: 5, rootSY: 0.95 }, 500, tw.Easing.Cubic.Out)
+          await tw.to({ amFrR: 0, amBkR: 0, lgFrR: 0, lgBkR: 0, rootY: 0, rootSY: 1 }, 500, tw.Easing.Cubic.In)
+          await tw.to({ amFrR: -30, amBkR: 30, lgFrR: 30, lgBkR: -30, rootY: 8, rootSY: 0.95 }, 500, tw.Easing.Cubic.Out)
+          await tw.to({ amFrR: 0, amBkR: 0, lgFrR: 0, lgBkR: 0, rootY: 0, rootSY: 1 }, 500, tw.Easing.Cubic.In)
+        } else if (this.pose === 'jump') {
+          await tw.to({ amFrR: 30, amBkR: 30, lgFrR: -60, lgBkR: -60, rootY: -100, rootSY: 0.95 }, 1000, tw.Easing.Cubic.Out)
+          await tw.to({ amFrR: 0, amBkR: 0, lgFrR: 0, lgBkR: 0, rootY: 0, rootSY: 0.95 }, 1000, tw.Easing.Cubic.In)
+        } else {
+          this.pose = null
+        }
+      }
+    },
+    stopPoseAnim () {
+      this.pose = null
+    }
+  },
+  mounted () {
+    this.startPoseAnim('jump')
+  },
+  beforeDestroy () {
+    this.stopPoseAnim()
   }
 }
 </script>
