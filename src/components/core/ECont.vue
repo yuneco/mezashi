@@ -8,7 +8,7 @@
       height: `${h}px`,
       opacity: a,
       transformOrigin: `${ox}px ${oy}px`,
-      transform: `translate3d(${x}px, ${y}px ,${z}px) scale(${s}) rotate(${r}deg)`,
+      transform: `translate3d(${x}px, ${y}px ,${z}px) scale(${scaleXY}) rotate(${r}deg)`,
       transition: disableAnimation ? 'none' : `
         transform ${dur}ms 0s ${easing},
         transform-origin ${dur}ms 0s ${easing},
@@ -66,7 +66,7 @@ export default {
     h: { type: [Number, String], default: 0 },
     z: { type: [Number, String], default: 0 },
     r: { type: [Number, String], default: 0 },
-    s: { type: [Number, String], default: 1 },
+    s: { type: [Number, String, Array], default: 1 },
     a: { type: [Number, String], default: 1 },
     dur: { type: [Number, String], default: 0 },
     easing: { type: String, default: 'ease' },
@@ -75,6 +75,11 @@ export default {
   data () {
     return {
       transitionendResolves: []
+    }
+  },
+  computed: {
+    scaleXY () {
+      return Array.isArray(this.s) ? `${this.s[0]}, ${this.s[1]}` : this.s
     }
   },
   methods: {
