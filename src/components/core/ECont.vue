@@ -1,7 +1,7 @@
 <template>
   <div class="elem-container"
     :class="{
-      debug: debug
+      debug: !debug
     }"
     :style="{
       width: `${w}px`,
@@ -13,8 +13,9 @@
         transform ${dur}ms 0s ${easing},
         transform-origin ${dur}ms 0s ${easing},
         opacity ${dur}ms 0s ${easing}`,
+      willChange: 'transform'
     }"
-    @click.stop="clicked"
+    @click="clicked"
     @transitionend.stop ="ontransitionend"
     >
     <slot></slot>
