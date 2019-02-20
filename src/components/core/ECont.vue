@@ -1,7 +1,7 @@
 <template>
   <div class="elem-container"
     :class="{
-      debug: !debug
+      debug: debug
     }"
     :style="{
       width: `${w}px`,

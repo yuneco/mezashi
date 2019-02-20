@@ -1,7 +1,7 @@
 <template>
   <e-cont class="player-root"
     disable-animation
-    :x="x - 182" :y="~~y + dpos.y - 570" :w="365" :h="579" :r="r"
+    :x="x - 182" :y="~~y + dpos.y - 570" :w="365" :h="579" :r="r + dpos.r"
     :s="[s * dpos.sx, s * dpos.sy]"
     :ox="182" :oy="570"
     @click="clicked"
@@ -39,7 +39,8 @@ export default {
   },
   data () {
     return {
-      dpos: { y: 0, sx: 1, sy: 1 }
+      dpos: { y: 0, sx: 1, sy: 1, r: 0 },
+      tween: null
     }
   },
   computed: {
@@ -50,12 +51,18 @@ export default {
       await this.jump()
     },
     async jump (height = 200, dur = 3000) {
-      const tw = new Tween(this.dpos)
+      const tw = this.tween = new Tween(this.dpos)
       await tw.to({ y: 0, sy: 0.9 }, dur * 0.1)
       await tw.to({ y: -height, sy: 1.1 }, dur * 0.5, tw.Easing.Cubic.Out)
       await tw.to({ y: 0, sy: 1 }, dur * 0.4, tw.Easing.Cubic.In)
       await tw.to({ y: 0, sy: 0.9 }, dur * 0.05)
       await tw.to({ y: 0, sy: 1 }, dur * 0.05)
+    },
+    async fall () {
+      if (this.tween) { this.tween.isSkip = true }
+      const tw = this.tween = new Tween(this.dpos)
+      await tw.to({ r: -180 }, 1000, tw.Easing.Cubic.Ou)
+      await tw.to({ y: 500 }, 1000, tw.Easing.Cubic.In)
     },
     /* called by CollisionDetector */
     collide (targetComp, name) {

@@ -24,6 +24,12 @@ export default {
     return {
       dpos: { y: 0, sx: 1, sy: 1 }
     }
+  },
+  methods: {
+    /* called by CollisionDetector */
+    collide (targetComp, name) {
+      this.$emit(`hit${name}`, targetComp)
+    }
   }
 }
 </script>
