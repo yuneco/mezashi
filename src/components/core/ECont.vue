@@ -70,7 +70,7 @@ export default {
     a: { type: [Number, String], default: 1 },
     dur: { type: [Number, String], default: 0 },
     easing: { type: String, default: 'ease' },
-    disableAnimation: { type: Boolean, default: false }
+    disableAnimation: { type: Boolean, default: true }
   },
   data () {
     return {

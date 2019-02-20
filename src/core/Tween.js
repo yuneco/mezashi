@@ -21,7 +21,6 @@ export default class Tween {
         const easedR = easingFunction ? easingFunction(r) : r
         this._apply(startVals, vals, easedR)
         if (r === 1) {
-          console.log('TW Resolved')
           resolve()
         } else {
           window.requestAnimationFrame(update)
@@ -37,8 +36,8 @@ export default class Tween {
       const toVal = to[k]
       const isNum = MathUtil.isNumber(fromVal) && MathUtil.isNumber(toVal)
       const midVal = isNum ? fromVal + (toVal - fromVal) * r : (r > 0.5 ? toVal : fromVal)
+      // console.log(k)
       this._target[k] = midVal
-      // console.log(`TW ${k}=${midVal}, from=${fromVal}, toVal=${toVal}, isMun=${isNum}, r=${r}`, from)
     })
   }
 }
