@@ -1,19 +1,25 @@
 import MathUtil from './MathUtil'
+import Easing from 'easing-functions'
 
 export default class Tween {
   constructor (target) {
     this._target = target
   }
-  async to (vals, ms) {
+
+  get Easing () {
+    return Easing
+  }
+
+  async to (vals, ms, easingFunction) {
     await new Promise(resolve => {
       const startMs = Date.now()
       const startVals = {}
       Object.keys(vals).forEach(k => { startVals[k] = this._target[k] })
-      resolve()
       const update = () => {
         const midMs = Date.now()
         const r = Math.min(1, (midMs - startMs) / ms)
-        this._apply(startVals, vals, r)
+        const easedR = easingFunction ? easingFunction(r) : r
+        this._apply(startVals, vals, easedR)
         if (r === 1) {
           console.log('TW Resolved')
           resolve()
