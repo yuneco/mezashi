@@ -12,8 +12,9 @@
       </div>
     </div>
     <div class="cont">
-      <button @click="jumpPlayer">Jump</button>
-      <button @click="fireMezashi">Mezashi</button>
+      <button @click.stop="jumpPlayer">Jump</button>
+      <button @click.stop="fireMezashi">Mezashi</button>
+      <div class="bulletCount">{{ bulletLeftStr }}</div>
     </div>
 
     <cat v-for="cat in cats" ref="cat" :key="`cat-${cat.id}`"
@@ -52,6 +53,18 @@
   width: 100%;
   height: 80px;
   bottom: 0;
+  .bulletCount {
+    position: absolute;
+    z-index: 1;
+    width: 50%;
+    height: 20px;
+    bottom: 10px;
+    right: 0;
+    color: rgb(63, 59, 52);
+    font-size: 11pt;
+    text-align: center;
+    pointer-events: none;
+  }
 }
 .score-box {
   color: rgb(63, 59, 52);
@@ -78,6 +91,7 @@ button {
 import Cat from '@/components/charas/Cat'
 import Player from '@/components/charas/Player'
 import Mezashi from '@/components/charas/Mezashi'
+import Time from '@/core/Time'
 import Tween from '@/core/Tween'
 import CollisionDetector from '@/core/CollisionDetector'
 
@@ -96,6 +110,8 @@ export default {
       level: 1,
       expToLevelup: 3,
       score: 0,
+      maxBullet: 6,
+      bulletLeft: 6,
       cats: [
       ],
       mezashis: [
@@ -111,6 +127,10 @@ export default {
     },
     playerPos () {
       return { x: 40, y: this.mainHeight - 10, s: 0.2 }
+    },
+    bulletLeftStr () {
+      if (this.bulletLeft <= 0) { return 'reloading...' }
+      return new Array(this.bulletLeft + 1).join('●') + new Array(this.maxBullet - this.bulletLeft + 1).join('○')
     }
   },
   methods: {
@@ -149,6 +169,9 @@ export default {
       }
     },
     async fireMezashi () {
+      if (this.bulletLeft <= 0) {
+        return
+      }
       const id = Math.floor(Math.random() * 100000)
       const mz = { id, pos: { x: 100, y: this.mainHeight - 20, s: 0.2 } }
       // Decide Y pos of mezashi
@@ -156,10 +179,19 @@ export default {
       const ppos = player.$el.getBoundingClientRect()
       mz.pos.y = ppos.y + (ppos.height * 0.55)
       this.$data.mezashis.push(mz)
+      this.bulletLeft -= 1
+      if (this.bulletLeft <= 0) {
+        this.reloadBullet()
+      }
       // animation
       mz.tw = new Tween(mz.pos)
       await mz.tw.to({ x: this.width }, 2000)
       this.removeMezashi(mz)
+    },
+    async reloadBullet () {
+      const LOADTIME_MS = 1500
+      await Time.wait(LOADTIME_MS)
+      this.bulletLeft = this.maxBullet
     },
     async addCat () {
       const id = Math.floor(Math.random() * 100000)

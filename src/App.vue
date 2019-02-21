@@ -11,6 +11,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  touch-action: manipulation;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -20,3 +21,15 @@ html, body {
   color: #2c3e50;
 }
 </style>
+
+<script>
+export default {
+  mounted () {
+    document.addEventListener('touchstart', event => {
+      if (event.touches.length > 1) {
+        event.preventDefault()
+      }
+    }, true)
+  }
+}
+</script>
