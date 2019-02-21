@@ -1,29 +1,12 @@
-# catfishattack
+🐱 NEKO  
+🐟 MAZASHI  
+🌟 ATTACK 
 
-## Project setup
-```
-yarn install
-```
+# What this?
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+Neko Mezashi Attack is an action game made with Vue.js, not using other game / animation frameworks.
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+# Try!
 
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+You can play the game here: 
+https://mezashiattack.firebaseapp.com
