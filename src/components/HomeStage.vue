@@ -118,6 +118,7 @@
 import Player from '@/components/charas/Player'
 import Cat from '@/components/charas/Cat'
 import Mezashi from '@/components/charas/Mezashi'
+import playSound from '@/assets/playSound'
 export default {
   name: 'HomeStage',
   components: { Player, Cat, Mezashi },
@@ -130,6 +131,7 @@ export default {
   },
   methods: {
     startGame () {
+      playSound('btn')
       this.$emit('newgame')
     },
     async startAnime () {

@@ -19,7 +19,6 @@
 
     <cat v-for="cat in cats" ref="cat" :key="`cat-${cat.id}`"
       :x="cat.pos.x" :y="cat.pos.y" :s="cat.pos.s"
-      @click="catClicked(cat)"
       @hitMezashi="(mezashiComp) => onCatHitMezashi(cat, mezashiComp)"
       @exit="removeCat(cat)"
     ></cat>
@@ -99,6 +98,7 @@ import Mezashi from '@/components/charas/Mezashi'
 import Time from '@/core/Time'
 import Tween from '@/core/Tween'
 import CollisionDetector from '@/core/CollisionDetector'
+import playSound from '@/assets/playSound'
 
 export default {
   name: 'GameStage',
@@ -139,11 +139,6 @@ export default {
     }
   },
   methods: {
-    async catClicked (cat) {
-      const tw = new Tween(cat.pos)
-      await tw.to({ x: -100 }, 5000)
-      cat.pos.x = 300
-    },
     checkCollision () {
       this.collisionDetector.clear()
       this.collisionDetector.add(
@@ -154,7 +149,7 @@ export default {
       this.collisionDetector.detect()
     },
     async onPlayerHitCat (catComp) {
-      console.log('PLAYER HIT CAT', catComp)
+      playSound('gameover')
       await this.$refs.player.fall()
       this.$emit('gameover', this.score)
     },
@@ -164,6 +159,7 @@ export default {
     onMezashiHitCat (mezashi, catComp) {
       this.removeMezashi(mezashi)
       if (catComp.hasMezashi) { return }
+      playSound('catch')
       catComp.hitMezashi()
       this.expToLevelup -= 1
       this.score++
@@ -177,6 +173,7 @@ export default {
       if (this.bulletLeft <= 0) {
         return
       }
+      playSound('shot')
       const id = Math.floor(Math.random() * 100000)
       const mz = { id, pos: { x: 100, y: this.mainHeight - 20, s: 0.2 } }
       // Decide Y pos of mezashi
@@ -219,6 +216,7 @@ export default {
       this.$data.cats.splice(index, 1)
     },
     jumpPlayer () {
+      playSound('jump')
       const player = this.$refs.player
       player.jump()
     },

@@ -85,6 +85,7 @@
 </style>
 
 <script>
+import playSound from '@/assets/playSound'
 export default {
   name: 'ResultStage',
   computed: {
@@ -94,12 +95,15 @@ export default {
   },
   methods: {
     startGame () {
+      playSound('btn')
       this.$emit('newgame')
     },
     goHome () {
+      playSound('btn')
       this.$emit('gohome')
     },
     tweet () {
+      playSound('btn')
       const text = encodeURIComponent(`ネコメザシアタックで${this.resultSocre}匹の猫にメザシをあげたよ！`)
       const pageUrl = `${document.location.protocol}//${document.location.host}/`
       const pop = window.open('', 'nekotweet')
