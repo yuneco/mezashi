@@ -204,7 +204,6 @@ export default {
       this.$data.cats.push(cat)
       cat.tw = new Tween(cat.pos)
       const isFin = await cat.tw.to({ x: -100 }, 10000)
-      console.log('FIN CAT at', isFin)
       if (isFin) { this.removeCat(cat) }
     },
     removeMezashi (mezashiData) {
@@ -213,7 +212,6 @@ export default {
       this.$data.mezashis.splice(index, 1)
     },
     removeCat (catData) {
-      console.warn('REMOVE CAT')
       const index = this.$data.cats.indexOf(catData)
       if (index === -1) { return }
       this.$data.cats.splice(index, 1)

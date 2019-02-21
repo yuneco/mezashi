@@ -1,17 +1,3 @@
-// import BtnSnd from '@/assets/snd/btn.mp3'
-// import CatchSnd from '@/assets/snd/catch.mp3'
-// import JumpSnd from '@/assets/snd/jump.mp3'
-// import GameOverSnd from '@/assets/snd/over.mp3'
-// import ShotSnd from '@/assets/snd/shot.mp3'
-
-// const snds = {
-//   btn: new Audio(BtnSnd),
-//   catch: new Audio(CatchSnd),
-//   jump: new Audio(JumpSnd),
-//   gameover: new Audio(GameOverSnd),
-//   shot: new Audio(ShotSnd)
-// }
-
 import loadSnd from 'audio-loader'
 import playSnd from 'audio-play'
 
