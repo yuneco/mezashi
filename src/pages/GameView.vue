@@ -20,8 +20,9 @@ export default {
     }
   },
   methods: {
-    gameover () {
-      this.$router.push('/')
+    gameover (score) {
+      this.$store.commit('setResultScore', { score })
+      this.$router.push('/result')
     }
   },
   mounted () {

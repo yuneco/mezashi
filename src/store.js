@@ -5,10 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
+    result: {
+      score: 0
+    }
   },
   mutations: {
-
+    setResultScore (state, { score }) {
+      state.result.score = ~~score
+    }
   },
   actions: {
 

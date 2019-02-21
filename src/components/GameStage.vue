@@ -45,6 +45,7 @@
   width: 350px;
   height: 530px;
   border: 1px solid gray;
+  background: white;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -84,6 +85,10 @@ button {
   border: 2px solid rgb(63, 59, 52);
   font-size: 14pt;
   outline: none;
+  &+button {
+    margin-left: -2px;
+    width: calc(50% + 2px);
+  }
 }
 </style>
 
@@ -151,7 +156,7 @@ export default {
     async onPlayerHitCat (catComp) {
       console.log('PLAYER HIT CAT', catComp)
       await this.$refs.player.fall()
-      this.$emit('gameover')
+      this.$emit('gameover', this.score)
     },
     onCatHitMezashi (cat, mezashiComp) {
       cat.tw.isSkip = true

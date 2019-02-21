@@ -105,7 +105,7 @@
     a {
       font-weight: bold;
       color: rgb(38, 110, 126);
-      border-bottom: 1px solid rgb(38, 110, 126);
+      text-decoration: none;
     }
   }
 }
