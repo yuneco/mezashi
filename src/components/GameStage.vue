@@ -117,6 +117,7 @@ export default {
       score: 0,
       maxBullet: 6,
       bulletLeft: 6,
+      isGameover: false,
       cats: [
       ],
       mezashis: [
@@ -149,7 +150,9 @@ export default {
       this.collisionDetector.detect()
     },
     async onPlayerHitCat (catComp) {
+      if (this.isGameover) { return }
       playSound('gameover')
+      this.isGameover = true
       await this.$refs.player.fall()
       this.$emit('gameover', this.score)
     },
