@@ -65,7 +65,8 @@ export default {
     x: { type: [Number, String], default: 0 },
     y: { type: [Number, String], default: 0 },
     r: { type: [Number, String], default: 0 },
-    s: { type: [Number, String], default: 1 }
+    s: { type: [Number, String], default: 1 },
+    initialPose: { type: String, default: '' }
   },
   data () {
     return {
@@ -171,6 +172,10 @@ export default {
   },
   mounted () {
     this.jumpHeight = 50 + 300 * Math.random()
+    if (this.initialPose) {
+      this.startPoseAnim(this.initialPose)
+      return
+    }
     const rnd = Math.random()
     if (rnd < 0.3) {
       this.startPoseAnim('walk')

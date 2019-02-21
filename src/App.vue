@@ -18,7 +18,11 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: rgb(63, 59, 52);
+  background-color: rgb(240, 206, 93);
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 </style>
 
