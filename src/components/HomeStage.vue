@@ -83,6 +83,7 @@
 .instruction {
   position: relative;
   height: calc(100% - 120px);
+  overflow: scroll;
   text-shadow:
     #fff 2px 0px 0px, #fff -2px 0px 0px,
     #fff 0px -2px 0px, #fff 0px 2px 0px,
@@ -100,7 +101,7 @@
     font-size: 9.5pt;
   }
   .contact {
-    padding: 25px;
+    padding: 0 25px 25px 25px;
     font-size: 9.5pt;
     a {
       font-weight: bold;
