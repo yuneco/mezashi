@@ -16,7 +16,7 @@
           タックルされるとゲームオーバーです。
         </div>
         <div class="contact">
-          ご意見・ご感想・バグ報告は <a href="https://twitter.com/yuneco" target="_blank">@yuneco</a>まで
+          ご意見・ご感想・バグ報告は <a href="https://twitter.com/yuneco" target="_blank" rel="noopener">@yuneco</a>まで
         </div>
       </div>
       <button class="start-game-btn" @click="startGame">START</button>
