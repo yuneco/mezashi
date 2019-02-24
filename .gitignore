@@ -3,6 +3,7 @@ node_modules
 /dist
 .private-env
 /work.private
+/public/snd
 firebase-debug.log
 
 # local env files
